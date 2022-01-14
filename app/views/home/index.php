@@ -1,12 +1,12 @@
-<link rel="stylesheet" href="../../../public/css/style.css">
+<link rel="stylesheet" href="./style.css">
 
-<h1>/ Home / Index / Naam</h1>
+<h1>RA</h1>
 
 Naam: <?= $data['name']; ?>
 
 <?php pvd($data['name']); ?>
 
-<?= dirname(__FILE__); ?>
+<?php echo dirname(__FILE__) . '\\' . basename(__FILE__); ?>
 
 
 
