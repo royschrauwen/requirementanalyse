@@ -16,6 +16,32 @@
         justify-content: space-between;
     }
 
+    header {
+        background-color: whitesmoke;
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    main {
+        background-color: goldenrod;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: baseline;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav {
+        background-color: royalblue;
+        
+    }
+
+    section {
+        background-color: purple;
+    }
+
     .requirements {
         background-color: none;
         margin: 0.2rem;
@@ -27,7 +53,7 @@
     .furps {
         background-color: lightsteelblue;
         padding: 0.4rem;
-        margin: 1rem 0.1rem;
+        margin: 0.1rem 0.1rem;
         border-radius: 0.3rem;
 
     }
@@ -47,7 +73,7 @@
         margin: 0.2rem;
         padding: 0.5rem;
         border: 0px solid white;
-        border-radius: 0.3rem;
+        border-radius: 0.2rem;
     }
     .musthave {
         background-color: #C5E0B3;

@@ -52,6 +52,11 @@ class Project
         return $this->requirements;
     }
 
+    public function countRequirements()
+    {
+        return count($this->requirements);
+    }
+
     public function getRequirementByCategory($array, $cat)
     {
         for ($i=0; $i < count($array); $i++) { 
@@ -131,7 +136,7 @@ class Project
             echo ">";
 
 
-
+            echo "<b>" . $prio . sprintf("%02d", $i+1) . "</b> ";
 
             echo "<input type=checkbox> ";
                 echo $result[$i]->getName();
