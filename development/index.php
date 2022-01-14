@@ -58,6 +58,7 @@ $requirement = new Requirement($project, "Een teamhoofd kan instellen welke auto
 $requirement = new Requirement($project, "Een teamhoofd kan developers toevoegen aan een team", "C", "F");
 $requirement = new Requirement($project, "Een teamhoofd kan developers verwijderen uit een team", "C", "F");
 $requirement = new Requirement($project, "De applicatie kan een kalenderweergave tonen met daarin de requirements", "C", "U");
+$requirement = new Requirement($project, "De navigatiebalk blijft in beeld als de gebruiker naar beneden scrollt", "S", "U");
 
 
 ?>
@@ -71,7 +72,21 @@ $requirement = new Requirement($project, "De applicatie kan een kalenderweergave
 
 <main>
 
-<nav>navigatie</nav>
+<nav>
+    
+navigatie
+
+<h4>Display</h4>
+<ul>
+    <li>Requirements-weergave</li>
+    <li>Requirement toevoegen</li>
+    <li>Project-instellingen</li>
+    <li>Gebruikers-instellingen</li>
+</ul>
+
+
+
+</nav>
 
 <section>
 

@@ -20,6 +20,10 @@
         background-color: whitesmoke;
         width: 100%;
         padding: 0.5rem;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        height: 90px;
     }
 
     main {
@@ -27,19 +31,36 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        align-items: baseline;
         justify-content: space-between;
+        align-items: flex-start;
         margin: 0;
         padding: 0;
     }
 
     nav {
         background-color: royalblue;
-        
+        position: -webkit-sticky;
+        position: sticky;
+        top: 90;
+        height: 100%;
+    }
+
+    nav li {
+        padding: 1rem;
+        margin: 0.5rem;
+        border-radius: 0.2rem;
+        background-color: sandybrown;
+    }
+
+    nav li:hover {
+        cursor: pointer;
+        background-color: rgb(218, 131, 55);
+
     }
 
     section {
         background-color: purple;
+        flex-grow: 2;
     }
 
     .requirements {
@@ -47,7 +68,7 @@
         margin: 0.2rem;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content:space-evenly;
 
     }
     .furps {
