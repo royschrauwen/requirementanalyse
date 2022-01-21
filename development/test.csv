@@ -1,0 +1,54 @@
+project_id;requirement_name;priority_id;category_id;status_id;user_id_added;date_deadline
+1;De gebruiker kan een requirement toevoegen aan het project;1;1;1;2;16-2-2022 12:00
+1;De requirements worden op volgorde van FURPS en MoSCoW weergegeven op het scherm;2;2;1;2;16-2-2022 12:00
+1;De gebruiker kan een requirement wijzigen;2;1;1;2;16-2-2022 12:00
+1;De gebruiker kan een requirement verwijderen;2;1;1;2;16-2-2022 12:00
+1;Requirements kunnen via drag and drop naar een andere categorie verplaatst worden;3;2;1;2;16-2-2022 12:00
+1;Requirements kunnen via drag and drop naar een andere proiriteit verplaatst worden;3;2;1;2;16-2-2022 12:00
+1;Een project kan opgeslagen worden in een database;1;3;1;2;16-2-2022 12:00
+1;Een project kan ingeladen worden uit een database;1;3;1;2;16-2-2022 12:00
+1;Een project kan offline ingelezen worden via een JSON bestand;3;3;1;2;16-2-2022 12:00
+1;Er staan tooltips bij de invoervelden;3;5;1;2;16-2-2022 12:00
+1;Requirements kunnen een afhankelijkheid hebben van elkaar;3;1;1;2;16-2-2022 12:00
+1;Requirements met een afhankelijkheid krijgen een andere weergave;3;2;1;2;16-2-2022 12:00
+1;Een project kan beveiligd worden met een wachtwoord;3;3;1;2;16-2-2022 12:00
+1;Requirements kunnen gesorteerd worden op keuze van de gebruiker;3;2;1;2;16-2-2022 12:00
+1;Er wordt ieder uur een backup gemaakt van de database;4;3;1;2;16-2-2022 12:00
+1;Een gebruiker kan de kleuren van de onderdelen aanpassen;3;2;1;2;16-2-2022 12:00
+1;Requirements kunnen als voltooid gemarkeerd worden;2;1;1;2;16-2-2022 12:00
+1;Voltooide requirements hebben een andere weergave;2;2;1;2;16-2-2022 12:00
+1;Een gebruiker kan kiezen om alleen onvoltooide requirements weer te geven;3;2;1;2;16-2-2022 12:00
+1;Het laden van de pagina moet binnen 5 seconden en anders moet er een loading screen komen;2;4;1;2;16-2-2022 12:00
+1;Het project wordt automatisch opgeslagen na een wijziging;2;4;1;2;16-2-2022 12:00
+1;Requirements kunnen als taak aan een developer gekoppeld worden;3;1;1;2;16-2-2022 12:00
+1;Een developer kan een overzicht zien van alle taken die aan hem/haar gekoppeld zijn;3;2;1;2;16-2-2022 12:00
+1;Er kan een deadline aan een requirement worden toegewezen;3;1;1;2;16-2-2022 12:00
+1;Een project kan geexporteerd worden als Word-bestand;3;1;1;2;16-2-2022 12:00
+1;Een project kan gekopieerd worden als tabel met opmaak voor een Word-bestand;3;1;1;2;16-2-2022 12:00
+1;De software heeft ook een weergave voor mobiel;3;2;1;2;16-2-2022 12:00
+1;De software heeft ook een weergave voor tablet;3;2;1;2;16-2-2022 12:00
+1;De software heeft ook standalone desktop applicatie;3;2;1;2;16-2-2022 12:00
+1;De software kan ook offline werken;4;1;1;2;16-2-2022 12:00
+1;Requirements krijgen een vast toegewezen letter-nummer-combinatie;2;1;1;2;16-2-2022 12:00
+1;Er kan middels een zoekfunctie gezocht worden binnen de requirements;3;1;1;2;16-2-2022 12:00
+1;Er kan een tijdsindicatie gekoppeld worden aan een requirement;3;1;1;2;16-2-2022 12:00
+1;Developers kunnen een overzicht zien met de totale tijd van alle toegewezen requirements;3;2;1;2;16-2-2022 12:00
+1;Developers kunnen een printbaar-overzicht krijgen met alle toegewezen requirements;3;2;1;2;16-2-2022 12:00
+1;Een gebruiker kan kiezen om de koppen van MoSCoW te tonen of te verbergen;3;2;1;2;16-2-2022 12:00
+1;Een gebruiker kan kiezen om wel of geen FURPS sortering toe te passen;3;2;1;2;16-2-2022 12:00
+1;Invoer wordt gecontroleerd op mysql-injectie en gebruik van onjuiste tekens;2;3;1;2;16-2-2022 12:00
+1;Invoer wordt automatisch voorzien van een ucfirst();3;2;1;2;16-2-2022 12:00
+1;Developers kunnen een account aanmaken op de webapp;2;1;1;2;16-2-2022 12:00
+1;Developers kunnen inloggen op de webapp;2;1;1;2;16-2-2022 12:00
+1;Requirements worden opgeslagen in een database;1;3;1;2;16-2-2022 12:00
+1;Requirements worden ingeladen uit een database;1;3;1;2;16-2-2022 12:00
+1;De software maakt gebruik van een MVC ontwerppatroon;2;4;1;2;16-2-2022 12:00
+1;Een gebruiker kan een verloren wachtwoord opnieuw aanvragen;3;3;1;2;16-2-2022 12:00
+1;Een gebruiker kan een eigen emailadres wijzigen;3;3;1;2;16-2-2022 12:00
+1;Een project kan een teamhoofd hebben;3;5;1;2;16-2-2022 12:00
+1;Een teamhoofd kan instellen welke autorisatie developers van dat team hebben;3;1;1;2;16-2-2022 12:00
+1;Een teamhoofd kan developers toevoegen aan een team;3;1;1;2;16-2-2022 12:00
+1;Een teamhoofd kan developers verwijderen uit een team;3;1;1;2;16-2-2022 12:00
+1;De applicatie kan een kalenderweergave tonen met daarin de requirements;3;2;1;2;16-2-2022 12:00
+1;De navigatiebalk blijft in beeld als de gebruiker naar beneden scrollt;2;2;1;2;16-2-2022 12:00
+1;Vanuit de requirements kunnen printbare acceptatie-rapporten gegenereerd worden;3;2;1;2;16-2-2022 12:00

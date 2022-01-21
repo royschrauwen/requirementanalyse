@@ -1,0 +1,4 @@
+project_id;requirement_name;priority_id;category_id;status_id;user_id_added;date_deadline
+1;De gebruiker kan een requirement toevoegen aan het project;1;1;1;2;16-2-2022 12:00
+1;De requirements worden op volgorde van FURPS en MoSCoW weergegeven op het scherm;2;2;1;2;16-2-2022 12:00
+1;De gebruiker kan een requirement wijzigen;2;1;1;2;16-2-2022 12:00
