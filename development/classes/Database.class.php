@@ -49,8 +49,6 @@ class Database
 
     public function select($query, $arguments = null)
     {
-        // Standaard een false teruggeven, tenzij de query iets oplevert
-        $result = false;
         $statement = $this->connect()->prepare($query);
 
         if (!$statement->execute($arguments)) {

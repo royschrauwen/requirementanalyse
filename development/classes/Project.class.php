@@ -1,16 +1,33 @@
 <?php
 
-class Project
+
+class Project extends Model
 {
     private string $name;
     private $requirements;
     private $developers;
 
-    public function __construct(string $projectname, $developer)
+    public function gRequirements($project_id)
     {
-        $this->setName($projectname);
-        $this->setDeveloper($developer);
+        
+        $reqs = $this->selectRequirements($project_id);
+        for ($i=0; $i < count($reqs); $i++) { 
+            $req[] = new Requirement($this, $reqs[$i]["requirement_name"], $reqs[$i]["priority_id"], $reqs[$i]["category_id"]);
+        }
+        return $req;
+
     }
+
+    public function testGetPriorities($projectID)
+    {
+        return $this->selectPriorities($projectID);
+    }
+
+    // public function __construct(string $projectname, $developer)
+    // {
+    //     $this->setName($projectname);
+    //     $this->setDeveloper($developer);
+    // }
 
     public function getName()
     {
@@ -92,20 +109,18 @@ class Project
         return $result2;
     }
 
-    public function showAllRequirements()
-    {
-        for ($i=0; $i < count($this->getRequirements()); $i++) { 
-            echo $i+1 . ": " . $this->getRequirement($i)->getName() . " - " . $this->getRequirement($i)->getPriorityName() . " - " . $this->getRequirement($i)->getCategoryName() . "<br>";
-        }
-    }
+    // public function showAllRequirements()
+    // {
+    //     for ($i=0; $i < count($this->getRequirements()); $i++) { 
+    //         echo $i+1 . ": " . $this->getRequirement($i)->getName() . " - " . $this->getRequirement($i)->getPriorityName() . " - " . $this->getRequirement($i)->getCategoryName() . "<br>";
+    //     }
+    // }
 
-    public function showAllRequirementsOrdered()
+    public function showAllRequirementsOrdered($arrayOfCategories)
     {
-        $this->showAllRequirementsOfCategory("F");
-        $this->showAllRequirementsOfCategory("U");
-        $this->showAllRequirementsOfCategory("R");
-        $this->showAllRequirementsOfCategory("P");
-        $this->showAllRequirementsOfCategory("S");
+        for ($i=0; $i < count($arrayOfCategories); $i++) { 
+            $this->showAllRequirementsOfCategory($arrayOfCategories[$i]);
+        }
     }
 
     public function showAllRequirementsOfPriority($prio)
@@ -115,31 +130,49 @@ class Project
 
 
 
-            echo "<div class=";
             
             switch ($prio) {
-                case "M":
-                    echo "musthave";
+                case "1":
+                    $moscowTypeName = "musthave";
                     break;
-                case "S":
-                    echo "shouldhave";
+                case "2":
+                    $moscowTypeName = "shouldhave";
                     break;
-                case "C":
-                    echo "couldhave";
+                case "3":
+                    $moscowTypeName = "couldhave";
                     break;
-                case "W":
-                    echo "wonthave";
+                case "4":
+                    $moscowTypeName = "wonthave";
                     break;              
             }
+                            
+            echo "<div class=\"";
+            echo $moscowTypeName;
             
+            if(rand(0,4) >= 4) {
+                echo " completed";
+            }
             
+            echo " \" draggable=true";
             echo ">";
 
 
-            echo "<b>" . $prio . sprintf("%02d", $i+1) . "</b> ";
+            //echo "<b>" . ucfirst(substr($moscowTypeName, 0, 1)) . "." . sprintf("%02d", $i+1) . "</b> ";
 
-            echo "<input type=checkbox> ";
-                echo $result[$i]->getName();
+            //echo "<input type=checkbox> ";
+            echo "<div class=\"card-info\">";
+            echo "<span>" . $result[$i]->getName() . "</span>";
+            echo "<span class=\"card-deadline\">" . $result[$i]->getDateTimeDeadline() . "</span>";
+            echo "</div>";
+                echo "<img class=\"card-image\" src=";
+                if(rand(0, 4) == 1){
+                $urlImage = "./images/profielfoto/royschrauwen.jpg";
+                } else {
+                $urlImage = "./images/profielfoto/generic.jpg";
+
+                }
+                echo $urlImage;
+                echo " width=80 height=80>";
             echo "</div>";
     }
 }
@@ -150,10 +183,10 @@ class Project
         
         $temp = $this->getRequirementByCategory($this->requirements, $cat);
         echo "<h2>" . $temp[0]->getCategoryName() . "</h2>";
-        $m = $this->getRequirementByCategoryAndPriority($cat, "M");
-        $s = $this->getRequirementByCategoryAndPriority($cat, "S");
-        $c = $this->getRequirementByCategoryAndPriority($cat, "C");
-        $w = $this->getRequirementByCategoryAndPriority($cat, "W");
+        $m = $this->getRequirementByCategoryAndPriority($cat, "1");
+        $s = $this->getRequirementByCategoryAndPriority($cat, "2");
+        $c = $this->getRequirementByCategoryAndPriority($cat, "3");
+        $w = $this->getRequirementByCategoryAndPriority($cat, "4");
         if($m){
         echo "<div class=moscow>";
 

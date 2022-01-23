@@ -1,14 +1,28 @@
 <?php
 
-class Requirement
+interface Template
+{
+    public function setVariable($name, $var);
+}
+
+class Requirement implements Template
 {
     private string $name;
     private string $priority;
     private string $category;
+    private string $datetime_deadline = "25/01/2022 - 18:00";
+
+    private $vars = [];
+
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+
 
     public function __construct(Project $project, string $name, string $priority, string $category)
     {
-        $this->name = $name;
+        $this->setName($name);
         $this->priority = $priority;
         $this->category = $category;
         $project->setRequirement($this);
@@ -17,6 +31,16 @@ class Requirement
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getDateTimeDeadline()
+    {
+        return $this->datetime_deadline;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     public function getPriority()
@@ -32,16 +56,16 @@ class Requirement
     public function getPriorityName()
     {
         switch ($this->priority) {
-            case "M":
+            case "1":
                 return "Must Have";
                 break;
-            case "S":
+            case "2":
                 return "Should Have";
                 break;
-            case "C":
+            case "3":
                 return "Could Have";
                 break;
-            case "W":
+            case "4":
                 return "Won't Have";
                 break;
         }
@@ -51,19 +75,19 @@ class Requirement
     public function getCategoryName()
     {
         switch ($this->category) {
-            case "F":
+            case "1":
                 return "Functionality";
                 break;
-            case "U":
+            case "2":
                 return "Usability";
                 break;
-            case "R":
+            case "3":
                 return "Reliability";
                 break;
-            case "P":
+            case "4":
                 return "Performance";
                 break;
-            case "S":
+            case "5":
                 return "Supportability";
                 break;                
         }

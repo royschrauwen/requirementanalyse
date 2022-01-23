@@ -3,8 +3,10 @@
 include ('./classes/Database.class.php');
 
 $db = new Database();
+
+// De pagina waarnaar we de gebruiker terugsturen na het importeren
 $returnPage = "test.php";
-$errorMessage = "";
+
 
 // Als het formulier niet ingevuld is, moeten we die weergeven
 // En anders verwerken we de data
@@ -12,6 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Het geuplaode bestand in een variabele zetten voor verdere munipulatie
     $uploadedFile = $_POST['myfile'];
+
+    // TODO: Uitzoeken of onderstaande code anders kan
+    // Wat is try / catch? --> Uitzoeken! ( https://www.phptutorial.net/php-oop/php-try-catch/ ??)
+
 
     // Controle of er een bestand is gekozen
     if(!isset($uploadedFile) || $uploadedFile == "" || $uploadedFile == NULL) {
