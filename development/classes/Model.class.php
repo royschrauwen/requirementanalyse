@@ -2,6 +2,18 @@
 
 class Model extends Database
 {
+
+    /* TUTORIAL */    
+    public $string;
+    public $tstring;
+
+    public function __construct(){
+        $this->string = "MVC + PHP = Awesome, click here!";
+        $this->tstring = "The string has been loaded through the template.";
+        $this->template = "./template/mvctest.tmp.php";
+    }
+    /* EINDE TUTORIAL */
+
     protected function selectRequirements($project_id)
     {
         $query = "SELECT * FROM requirements WHERE `project_id` = ? ORDER BY `date_deadline` DESC, `priority_id` ASC, `category_id` ASC";
