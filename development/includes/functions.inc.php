@@ -10,7 +10,8 @@ function pvd($string)
 
 function autoloadClass($class_name)
 {
-	$path_to_file = './classes/' . $class_name . '.class.php';
+	$class_name_exploded = explode("\\", $class_name);
+	$path_to_file = './classes/' . $class_name_exploded[1] . '.class.php';
 
 	if (file_exists($path_to_file)) {
 		require $path_to_file;

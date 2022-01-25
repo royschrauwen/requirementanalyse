@@ -1,4 +1,5 @@
 <?php
+namespace Softalist;
 class Controller
 {
     private $model;
@@ -9,5 +10,11 @@ class Controller
 
     public function clicked1() {
     $this->model->string = "Updated Data, thanks to MVC and PHP!";
+    }
+
+    public function setTemplate(string $templateURL)
+    {
+    $this->model->template = "./template/" . $templateURL . ".tmp.php";
+
     }
 }

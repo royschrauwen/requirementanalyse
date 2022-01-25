@@ -1,4 +1,5 @@
 <?php
+namespace Softalist;
 class View
 {
     private $model;
@@ -14,6 +15,7 @@ class View
     }
 
     public function output2(){
+        $paginaTitel = $this->model->paginaTitel;
         $stringName = $this->model->string;
         $data = "<p>" . $this->model->tstring ."</p>";
         require_once($this->model->template);

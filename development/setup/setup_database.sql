@@ -67,7 +67,12 @@ CREATE TABLE IF NOT EXISTS requirements(
     FOREIGN KEY (user_id_task) REFERENCES users(user_id)
 );  
 
-
+CREATE TABLE IF NOT EXISTS tasks(
+    task_id             INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name                VARCHAR(255),
+    requirement_id      INTEGER,
+    FOREIGN KEY (requirement_id) REFERENCES requirements(requirement_id)
+);
 
 
 
@@ -116,5 +121,11 @@ INSERT INTO requirements (requirement_name, project_id, priority_id, category_id
     ('Requirements moeten weergegeven worden op het scherm', '1', '1', '2', '1', '2')
     ;
 
-
-
+INSERT INTO tasks (name, requirement_id)
+    VALUES
+    ('Tast Taak 1 van Requirement 1', 1),
+    ('Tast Taak 2 van Requirement 1', 1),
+    ('Tast Taak 1 van Requirement 2', 2),
+    ('Tast Taak 1 van Requirement 3', 3),
+    ('Tast Taak 2 van Requirement 3', 3)
+    ;

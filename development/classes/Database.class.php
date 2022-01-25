@@ -1,5 +1,5 @@
 <?php
-
+namespace Softalist;
 class Database
 {    
     protected function connect()
@@ -10,11 +10,11 @@ class Database
             $password = '';
             $database = 'softalist_test';
 
-            $pdo = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
+            $pdo = new \PDO("mysql:host=$hostname;dbname=$database", $username, $password);
             return $pdo;
             // $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        catch(PDOException $e) {
+        catch(\PDOException $e) {
             echo "Verbinding met de database is mislukt: " . $e->getMessage() . "<br>";
             die();
         }
@@ -64,7 +64,7 @@ class Database
             exit();
         }
     
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     

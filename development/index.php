@@ -1,35 +1,23 @@
 <?php
 
-require_once('./includes/functions.inc.php');
+use Softalist\Requirement;
 
-$db = new Database();
+require_once "./includes/functions.inc.php";
 
-$project = new Project();
+//$db = new Softalist\Database();
 
 
 // TODO: Haal uit de database het project van de huidige gebruiker
-$projectID = '1';
-$project->setName("TestProject");
+$projectId = isset($_GET['id']) ? $_GET['id'] : 1;
+$project = new Softalist\Project($projectId);
 
 
-// TODO: Zorg dat onderstaande methode wordt aangeroepen via de constructor van Project met argument projectID
-$requirementList = $project->gRequirements($projectID);
 
+include "header.php";
 
-include('header.php'); 
+// TODO: Onderstaande moet via MVC en htaccess bepaald worden uit de URL
+$view = isset($_GET['view']) ? $_GET['view'] : "furps";
 
-
- // TODO: Onderstaande moet via MVC en htaccess bepaald worden uit de URL
-if(!isset($_GET['view'])) {
-    $view = "furps";
-} else {
-    $view = $_GET['view'];
-}
-
-
-// TODO:
-// Requirements moeten opgedeeld kunnen worden in taken.
-// Een Requirement is dan een soort use-case / userstory en daaraan verbonden hangen taken.
 
 
 ?>
@@ -53,50 +41,34 @@ if(!isset($_GET['view'])) {
 
         <div class="requirements">
 
-        <?php
-        if ($view == "furps") {
-            ?>
+        <?php if ($view == "furps") { ?>
             <div class="furps-main">
                 <?php
-
                 // TODO: Haal de onderstaande array op uit het de categorieen die bij het project horen volgens de database
                 // TODO: Pas dus ook in Project.class.php aan dat hij de namen dus ook uit de database haalt
                 $arrayOfCategories = ["1", "2", "3", "4", "5"];
                 //$arrayOfCategories = ["3", "5"];
 
                 $project->showAllRequirementsOrdered($arrayOfCategories);
-
                 ?>
             </div>
-            <?php 
-        }
-        ?>
+            <?php } ?>
 
-        <?php
-        if ($view == "moscow") {
-            ?>
+        <?php if ($view == "moscow") { ?>
 
             <div class="moscow-main">
                 <?php
 
-                    // Onderstaande dingen moeten als methode in de Project klasse
-                    $testArray = $project->testGetPriorities($projectID);
-                    //pvd($testArray);
-
-                    for ($i=1; $i <= count($testArray); $i++) { 
-                        echo "<div class=moscow-card>";
-                            echo "<h3>" . $i . "</h3>";
-                            $project->showAllRequirementsOfPriority($i);  
-                        echo "</div>"; 
-                    }
-
-
+                for ($i = 1; $i <= count($project->getPriorities()); $i++) {
+                    echo "<div class=moscow-card>";
+                    echo "<h3>" . $project->getPriorities()[$i - 1] . "</h3>";
+                    $project->showAllRequirementsOfPriority($i);
+                    echo "</div>";
+                }
                 ?>
             </div>
 
-            <?php 
-        }
-        ?>
+            <?php } ?>
 
         </div>
 
@@ -104,4 +76,4 @@ if(!isset($_GET['view'])) {
 
 </main>
 
-<!-- <?php include('footer.php'); ?> -->
+<!-- <?php include "footer.php"; ?> -->

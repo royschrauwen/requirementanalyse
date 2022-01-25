@@ -1,22 +1,27 @@
 <?php
+namespace Softalist;
 
-interface Template
-{
-    public function setVariable($name, $var);
-}
 
-class Requirement implements Template
+class Requirement
 {
     private string $name;
     private string $priority;
     private string $category;
     private string $datetime_deadline = "25/01/2022 - 18:00";
+    private Project $project;
+    private $tasks = [];
 
-    private $vars = [];
 
-    public function setVariable($name, $var)
+ 
+
+    public function addTask(Task $newTask)
     {
-        $this->vars[$name] = $var;
+        $this->tasks[] = $newTask;
+    }
+
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 
 
@@ -25,7 +30,8 @@ class Requirement implements Template
         $this->setName($name);
         $this->priority = $priority;
         $this->category = $category;
-        $project->setRequirement($this);
+        $this->project = $project;
+        //$project->setRequirement($this);
     }
 
     public function getName()

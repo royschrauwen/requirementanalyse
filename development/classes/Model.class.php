@@ -1,16 +1,19 @@
 <?php
-
+namespace Softalist;
 class Model extends Database
 {
 
     /* TUTORIAL */    
     public $string;
     public $tstring;
+    public $template;
+    public $paginaTitel;
 
     public function __construct(){
         $this->string = "MVC + PHP = Awesome, click here!";
         $this->tstring = "The string has been loaded through the template.";
         $this->template = "./template/mvctest.tmp.php";
+        $this->paginaTitel = "Template Test met Titel";
     }
     /* EINDE TUTORIAL */
 
