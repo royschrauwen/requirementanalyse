@@ -2,10 +2,10 @@
 namespace Softalist;
 class Project
 {
-    private $id;
+    private int $id;
     private string $name;
-    private $requirements = [];
-    private $database;
+    private array $requirements = [];
+    private Database $database;
 
 
     // Tijdelijk even de categorieen die bij het project horen in een array hardcoden\
@@ -14,10 +14,10 @@ class Project
     private $priorities = [];
 
 
-    public function __construct(int $id)
+    public function __construct(Database $db, int $id)
     {
         $this->id = $id;
-        $this->database = new Database();
+        $this->database = $db;
         $this->selectName();
 
 
