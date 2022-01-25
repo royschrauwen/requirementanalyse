@@ -4,40 +4,35 @@ class Project
 {
     private int $id;
     private string $name;
-    private array $requirements = [];
     private Database $database;
-
-
-    // Tijdelijk even de categorieen die bij het project horen in een array hardcoden\
-    // TODO: Onderstaande array uit de database halen
-    private $categories = [];
-    private $priorities = [];
+    private array $requirements = [];
+    private array $categories = [];
+    private array $priorities = [];
 
 
     public function __construct(Database $db, int $id)
     {
         $this->id = $id;
         $this->database = $db;
+
         $this->selectName();
-
-
-        echo "<pre>";
         $this->selectCategories();
-        echo "</pre>";
 
-        echo "<pre>";
-        $this->selectPriorities();
-        echo "</pre>";
+        $priorityArray = $this->selectArrayOfPriorities();
+        $this->convertArrayToPriorities($priorityArray);
         
-        $arrayFromDatabase = $this->selectArrayOfRequirements();
-        $this->convertArrayToRequirementObjects($arrayFromDatabase);
+        $requirementArray = $this->selectArrayOfRequirements();
+        $this->convertArrayToRequirementObjects($requirementArray);
     }
 
-
     
+    /* ================================================ */
     /* ========== INTERACTIE MET DE DATABASE ========== */
+    /* ================================================ */
+
 
     // Haal de naam van het huidige project op uit de database
+    // TODO: Controleren of er rijen zijn die aan de query voldoen
     private function selectName()
     {
         $query = "SELECT `project_name` FROM projecten WHERE `project_id` = ?";
@@ -46,6 +41,7 @@ class Project
 
 
     // Haal een array op uit de database met alle requirements-records die horen bij het huidige project
+    // TODO: Controleren of er rijen zijn die aan de query voldoen
     private function selectArrayOfRequirements()
     {
         $query = "SELECT * FROM requirements WHERE `project_id` = ? ORDER BY `requirement_id` ASC, `date_deadline` DESC, `priority_id` ASC, `category_id` ASC";
@@ -54,57 +50,73 @@ class Project
 
 
     // Haal een array met de categorieen die bij dit project horen op uit de database
+    // TODO: Controleren of er rijen zijn die aan de query voldoen
+    // TODO: Categories moeten een eigen klasse krijgen zodat er ook nummers enzo van gebruikt kunnen worden
     private function selectCategories()
     {
         $query = "SELECT * FROM requirement_categories WHERE `project_id` = ? ORDER BY `category_id` ASC";
-        $temp = $this->database->select($query, [$this->id]);
-        for ($i=0; $i < count($temp); $i++) { 
-            $this->categories[] = $temp[$i]["category_name"];
+        $result = $this->database->select($query, [$this->id]);
+        for ($i=0; $i < count($result); $i++) { 
+            $this->categories[] = $result[$i]["category_name"];
         }
     }
 
 
     // Haal een array met de prioriteiten die bij dit project horen op uit de database
-    private function selectPriorities()
+    // TODO: Controleren of er rijen zijn die aan de query voldoen
+    private function selectArrayOfPriorities()
     {
-        $query = "SELECT * FROM requirement_priorities WHERE `project_id` = ? ORDER BY `priority_id` ASC";
-        $temp = $this->database->select($query, [$this->id]);
-        for ($i=0; $i < count($temp); $i++) { 
-            $this->priorities[] = $temp[$i]["priority_name"];
-        }
+        $query = "SELECT * FROM `requirement_priorities` WHERE `project_id` = ? ORDER BY `priority_id` ASC";
+        return $this->database->select($query, [$this->id]);
     }
 
     
 
-
+    /* ========================================= */
     /* ========== AFWIJKENDE METHODES ========== */
+    /* ========================================= */
 
 
-    // Converteer een array met requirements uit de database naar Requirement-Objecten en sla deze op als array in het Project-Object
+    // Converteer een array met requirements uit de database naar Requirement-Objecten en sla deze op als array in dit Project-Object
+    public function convertArrayToPriorities($array)
+    {
+        for ($i = 0; $i < count($array); $i++) { 
+            $priority = new Priority(
+                $array[$i]["priority_id"], 
+                $array[$i]["priority_name"], 
+                $array[$i]["priority_color"], 
+                $array[$i]["priority_backgroundcolor"]
+            );
+            $this->setPriority($priority);
+        }
+    }
+
+
     public function convertArrayToRequirementObjects($array)
     {
         for ($i = 0; $i < count($array); $i++) { 
-            $requirement = new Requirement($this, $array[$i]["requirement_name"],$array[$i]["priority_id"],$array[$i]["category_id"]);
+            $requirement = new Requirement(
+                $this, 
+                $array[$i]["requirement_name"],
+                $array[$i]["priority_id"],
+                $array[$i]["category_id"]
+            );
             $this->setRequirement($requirement);
         }
     }
 
 
-
-
-
-    /* ========== STANDAARD GETTER/SETTER METHODES ========== */
-
-
-    // Voeg een requirement toe aan dit Project-Object
-    // TODO: Een requirement moet ook aan de database toegevoegd worden
-    private function setRequirement(Requirement $requirement)
+    // Geen idee of het good practice is om dergelijke methodes te maken of niet
+    // TODO: Uitzoeken of je beter dit soort methodes kunt maken of dat je beter de code gewoon los in je document zet ipv deze methode aanroepen
+    public function countRequirements()
     {
-        $this->requirements[] = $requirement;
+        return count($this->requirements);
     }
 
 
-
+    /* ====================================================== */
+    /* ========== STANDAARD GETTER/SETTER METHODES ========== */
+    /* ====================================================== */
 
     public function getName()
     {
@@ -116,25 +128,14 @@ class Project
         $this->name = $newName;
     }
 
-    // public function setDeveloper($developer)
-    // {
-    //     $this->developers[] = $developer;
-    // }
-
-    // public function getDevelopers()
-    // {
-    //     return $this->developers;
-    // }
-
-    // public function getDeveloper($i)
-    // {
-    //     return $this->developers[$i];
-    // }
-
-
     public function getPriorities()
     {
         return $this->priorities;
+    }
+
+    private function setPriority(Priority $prioritie)
+    {
+        $this->priorities[] = $prioritie;
     }
 
     public function getRequirement($i)
@@ -142,15 +143,23 @@ class Project
         return $this->requirements[$i];
     }
 
+    // Voeg een requirement toe aan dit Project-Object
+    // TODO: Een requirement moet ook aan de database toegevoegd worden
+    private function setRequirement(Requirement $requirement)
+    {
+        $this->requirements[] = $requirement;
+    }
+
     public function getRequirements()
     {
         return $this->requirements;
     }
 
-    public function countRequirements()
-    {
-        return count($this->requirements);
-    }
+
+
+    /* =============================== */
+    /* ========== UITZOEKEN ========== */
+    /* =============================== */
 
     public function getRequirementByCategory($array, $cat)
     {
@@ -188,12 +197,6 @@ class Project
         return $result2;
     }
 
-    // public function showAllRequirements()
-    // {
-    //     for ($i=0; $i < count($this->getRequirements()); $i++) {
-    //         echo $i+1 . ": " . $this->getRequirement($i)->getName() . " - " . $this->getRequirement($i)->getPriorityName() . " - " . $this->getRequirement($i)->getCategoryName() . "<br>";
-    //     }
-    // }
 
     public function showAllRequirementsOrdered($arrayOfCategories)
     {
@@ -204,9 +207,9 @@ class Project
 
     public function showAllRequirementsOfPriority($prio)
     {
-        $result = $this->getRequirementByPriority($this->requirements, $prio);
+        $result = $this->getRequirementByPriority($this->requirements, $prio+1);
         for ($i = 0; $i < count($result); $i++) {
-            switch ($prio) {
+            switch ($prio+1) {
                 case "1":
                     $moscowTypeName = "musthave";
                     break;
@@ -250,18 +253,18 @@ class Project
             echo " width=80 height=80>";
             echo "</div>";
             
-            if (rand(0,10) >= 8) {
-                // Vak eronder voor de tasks
-                // TODO: Dynamisch genereren?
-                echo "<div class=musthave>";
-                echo "<ul>";
-                echo "<li>Task</li>";
-                echo "<li>Task</li>";
-                echo "<li>Task</li>";
-                echo "<li>Task</li>";
-                echo "</ul>";
-                echo "</div>";
-            }
+            // if (rand(0,10) >= 8) {
+            //     // Vak eronder voor de tasks
+            //     // TODO: Dynamisch genereren?
+            //     echo "<div class=musthave>";
+            //     echo "<ul>";
+            //     echo "<li>Task</li>";
+            //     echo "<li>Task</li>";
+            //     echo "<li>Task</li>";
+            //     echo "<li>Task</li>";
+            //     echo "</ul>";
+            //     echo "</div>";
+            // }
         }
     }
 
@@ -270,8 +273,8 @@ class Project
         // TODO: Deze methode herschrijven. Code is niet mooi en zeker niet DRY
         echo "<div class=furps>";
 
-        $temp = $this->getRequirementByCategory($this->requirements, $cat);
-        echo "<h2>" . $temp[0]->getCategoryName() . "</h2>";
+        $result = $this->getRequirementByCategory($this->requirements, $cat);
+        echo "<h2>" . $result[0]->getCategoryName() . "</h2>";
         $m = $this->getRequirementByCategoryAndPriority($cat, "1");
         $s = $this->getRequirementByCategoryAndPriority($cat, "2");
         $c = $this->getRequirementByCategoryAndPriority($cat, "3");
