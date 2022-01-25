@@ -4,12 +4,10 @@ use Softalist\Requirement;
 
 require_once "./includes/functions.inc.php";
 
-//$db = new Softalist\Database();
 
-$database = new Softalist\Database();
 // TODO: Haal uit de database het project van de huidige gebruiker
 $projectId = isset($_GET['id']) ? $_GET['id'] : 1;
-$project = new Softalist\Project($database, $projectId);
+$project = new Softalist\Project(new Softalist\Database(), $projectId);
 
 
 
