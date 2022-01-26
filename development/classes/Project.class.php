@@ -16,10 +16,12 @@ class Project
         $this->database = $db;
 
         $this->selectName();
-        $this->selectCategories();
 
         $priorityArray = $this->selectArrayOfPriorities();
         $this->convertArrayToPriorities($priorityArray);
+
+        $categoryArray = $this->selectArrayOfCategories();
+        $this->convertArrayToCategories($categoryArray);
         
         $requirementArray = $this->selectArrayOfRequirements();
         $this->convertArrayToRequirementObjects($requirementArray);
@@ -49,17 +51,17 @@ class Project
     }
 
 
-    // Haal een array met de categorieen die bij dit project horen op uit de database
-    // TODO: Controleren of er rijen zijn die aan de query voldoen
-    // TODO: Categories moeten een eigen klasse krijgen zodat er ook nummers enzo van gebruikt kunnen worden
-    private function selectCategories()
-    {
-        $query = "SELECT * FROM requirement_categories WHERE `project_id` = ? ORDER BY `category_id` ASC";
-        $result = $this->database->select($query, [$this->id]);
-        for ($i=0; $i < count($result); $i++) { 
-            $this->categories[] = $result[$i]["category_name"];
-        }
-    }
+    // // Haal een array met de categorieen die bij dit project horen op uit de database
+    // // TODO: Controleren of er rijen zijn die aan de query voldoen
+    // // TODO: Categories moeten een eigen klasse krijgen zodat er ook nummers enzo van gebruikt kunnen worden
+    // private function selectCategories()
+    // {
+    //     $query = "SELECT * FROM requirement_categories WHERE `project_id` = ? ORDER BY `category_id` ASC";
+    //     $result = $this->database->select($query, [$this->id]);
+    //     for ($i=0; $i < count($result); $i++) { 
+    //         $this->categories[] = $result[$i]["category_name"];
+    //     }
+    // }
 
 
     // Haal een array met de prioriteiten die bij dit project horen op uit de database
@@ -70,6 +72,15 @@ class Project
         return $this->database->select($query, [$this->id]);
     }
 
+
+    // Haal een array met de prioriteiten die bij dit project horen op uit de database
+    // TODO: Controleren of er rijen zijn die aan de query voldoen
+    private function selectArrayOfCategories()
+    {
+        $query = "SELECT * FROM `requirement_categories` WHERE `project_id` = ? ORDER BY `category_id` ASC";
+        return $this->database->select($query, [$this->id]);
+    }
+
     
 
     /* ========================================= */
@@ -77,7 +88,7 @@ class Project
     /* ========================================= */
 
 
-    // Converteer een array met requirements uit de database naar Requirement-Objecten en sla deze op als array in dit Project-Object
+    // Converteer een array met priorities uit de database naar Requirement-Objecten en sla deze op als array in dit Project-Object
     public function convertArrayToPriorities($array)
     {
         for ($i = 0; $i < count($array); $i++) { 
@@ -92,6 +103,20 @@ class Project
     }
 
 
+    // Converteer een array met categories uit de database naar Requirement-Objecten en sla deze op als array in dit Project-Object
+    public function convertArrayToCategories($array)
+    {
+        for ($i = 0; $i < count($array); $i++) { 
+            $category = new Category(
+                $array[$i]["category_id"], 
+                $array[$i]["category_name"]
+            );
+            $this->setCategory($category);
+        }
+        
+    }
+
+    // Converteer een array met requirements uit de database naar Requirement-Objecten en sla deze op als array in dit Project-Object
     public function convertArrayToRequirementObjects($array)
     {
         for ($i = 0; $i < count($array); $i++) { 
@@ -133,9 +158,19 @@ class Project
         return $this->priorities;
     }
 
-    private function setPriority(Priority $prioritie)
+    private function setPriority(Priority $priority)
     {
-        $this->priorities[] = $prioritie;
+        $this->priorities[] = $priority;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    private function setCategory(Category $category)
+    {
+        $this->categories[] = $category;
     }
 
     public function getRequirement($i)
@@ -253,18 +288,6 @@ class Project
             echo " width=80 height=80>";
             echo "</div>";
             
-            // if (rand(0,10) >= 8) {
-            //     // Vak eronder voor de tasks
-            //     // TODO: Dynamisch genereren?
-            //     echo "<div class=musthave>";
-            //     echo "<ul>";
-            //     echo "<li>Task</li>";
-            //     echo "<li>Task</li>";
-            //     echo "<li>Task</li>";
-            //     echo "<li>Task</li>";
-            //     echo "</ul>";
-            //     echo "</div>";
-            // }
         }
     }
 
@@ -273,63 +296,15 @@ class Project
         // TODO: Deze methode herschrijven. Code is niet mooi en zeker niet DRY
         echo "<div class=furps>";
 
-        $result = $this->getRequirementByCategory($this->requirements, $cat);
-        echo "<h2>" . $result[0]->getCategoryName() . "</h2>";
-        $m = $this->getRequirementByCategoryAndPriority($cat, "1");
-        $s = $this->getRequirementByCategoryAndPriority($cat, "2");
-        $c = $this->getRequirementByCategoryAndPriority($cat, "3");
-        $w = $this->getRequirementByCategoryAndPriority($cat, "4");
-        if ($m) {
-            echo "<div class=moscow>";
+        for ($i = 0; $i < count($this->priorities); $i++) { 
+            echo "<h4>" . $this->priorities[$i]->getName() . "</h4>";
+            echo "<div>";
+            
+            echo "Haal alle requirements op van category i met priority u";
 
-            echo "<h3>" . "Must Have" . "</h3>";
-            for ($i = 0; $i < count($m); $i++) {
-                echo "<div class=musthave>";
-                echo "<input type=checkbox> ";
-                echo $m[$i]->getName();
-                echo "</div>";
-            }
             echo "</div>";
         }
-        if ($s) {
-            echo "<div class=moscow>";
-            echo "<h3>" . "Should Have" . "</h3>";
 
-            for ($i = 0; $i < count($s); $i++) {
-                echo "<div class=shouldhave>";
-                echo "<input type=checkbox> ";
-
-                echo $s[$i]->getName();
-                echo "</div>";
-            }
-            echo "</div>";
-        }
-        if ($c) {
-            echo "<div class=moscow>";
-
-            echo "<h3>" . "Could Have" . "</h3>";
-
-            for ($i = 0; $i < count($c); $i++) {
-                echo "<div class=couldhave>";
-                echo "<input type=checkbox> ";
-
-                echo $c[$i]->getName();
-                echo "</div>";
-            }
-            echo "</div>";
-        }
-        if ($w) {
-            echo "<div class=moscow>";
-            echo "<h3>" . "Won't Have" . "</h3>";
-            for ($i = 0; $i < count($w); $i++) {
-                echo "<div class=wonthave>";
-                echo "<input type=checkbox> ";
-
-                echo $w[$i]->getName();
-                echo "</div>";
-            }
-            echo "</div>";
-        }
         echo "</div>";
     }
 }

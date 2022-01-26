@@ -1,6 +1,5 @@
 <?php
-
-use Softalist\Requirement;
+session_start();
 
 require_once ("./includes/functions.inc.php");
 
@@ -20,10 +19,14 @@ include ("navigation.php");
         <div class="requirements">
 
             <?php if ($view == "furps") { ?>
-                <div class="furps-main">
+                <div class="moscow-main">
                     <?php
-                    $arrayOfCategories = ["1", "2", "3", "4", "5"];
-                    $project->showAllRequirementsOrdered($arrayOfCategories);
+                    for ($i = 0; $i < count($project->getCategories()); $i++) {
+                        echo "<div class=moscow-card>";
+                        echo "<h3>" . $project->getCategories()[$i]->getName() . "</h3>";
+                        $project->showAllRequirementsOfCategory($i);
+                        echo "</div>";
+                    }
                     ?>
                 </div>
                 <?php } ?>
