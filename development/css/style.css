@@ -9,7 +9,7 @@
     }
 
     body {
-        background-color: #008B8B;
+        background-color: #DBE4F3;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -47,7 +47,7 @@
         padding: 0.2rem;
         position: -webkit-sticky;
         position: sticky;
-        top: 90;
+        top: 90px;
         height: 100%;
         border-radius: 0.5rem;
         border-top-right-radius: 0rem;
