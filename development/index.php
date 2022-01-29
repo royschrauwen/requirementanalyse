@@ -10,6 +10,9 @@ $project = new Softalist\Project(new Softalist\Database(), $projectId);
 // TODO: Onderstaande moet via MVC en htaccess bepaald worden uit de URL
 $view = isset($_GET['view']) ? $_GET['view'] : "moscow";
 
+// TODO: Uitzoeken hoe ik deze kan gebruiken. Misschien met een Default als er geen correcte waarde is?
+// $view = (string)filter_input(INPUT_GET, 'view'); 
+
 include ("header.php");
 include ("navigation.php"); 
 
@@ -22,18 +25,9 @@ include ("navigation.php");
                 include ('./template/furps.template.php');
             } ?>
 
-            <?php if ($view == "moscow") { ?>
-                <div class="moscow-main">
-                    <?php
-                    for ($i = 0; $i < count($project->getPriorities()); $i++) {
-                        echo "<div class=moscow-card>";
-                        echo "<h3>" . $project->getPriorities()[$i]->getName() . "</h3>";
-                        $project->showAllRequirementsOfPriority($i);
-                        echo "</div>";
-                    }
-                    ?>
-                </div>
-            <?php } ?>
+            <?php if ($view == "moscow") { 
+                include ('./template/moscow.template.php');
+            } ?>
 
         </div>
     </section>
