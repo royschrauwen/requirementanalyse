@@ -196,10 +196,10 @@ class Project
     /* ========== UITZOEKEN ========== */
     /* =============================== */
 
-    public function getRequirementByCategory($array, $cat)
+    public function getRequirementByCategory($array, $category)
     {
         for ($i = 0; $i < count($array); $i++) {
-            if ($array[$i]->getCategory() == $cat) {
+            if ($array[$i]->getCategory() == $category) {
                 $result[] = $array[$i];
             }
         }
@@ -222,11 +222,11 @@ class Project
         return $result;
     }
 
-    public function getRequirementByCategoryAndPriority($cat, $prio)
+    public function getRequirementByCategoryAndPriority($category, $prio)
     {
         $result1 = $this->getRequirementByCategory(
             $this->getRequirements(),
-            $cat
+            $category
         );
         $result2 = $this->getRequirementByPriority($result1, $prio);
         return $result2;
@@ -291,16 +291,19 @@ class Project
         }
     }
 
-    public function showAllRequirementsOfCategory($cat)
+    public function showAllRequirementsOfCategory(Category $category)
     {
-        // TODO: Deze methode herschrijven. Code is niet mooi en zeker niet DRY
         echo "<div class=furps>";
 
         for ($i = 0; $i < count($this->priorities); $i++) { 
             echo "<h4>" . $this->priorities[$i]->getName() . "</h4>";
             echo "<div>";
             
-            echo "Haal alle requirements op van category i met priority u";
+            echo "Haal alle requirements op van category <strong>"
+            . $category->getName()
+            . "</strong> met priority <strong>" 
+            . $this->priorities[$i]->getName() 
+            . "</strong><br><br>";
 
             echo "</div>";
         }
