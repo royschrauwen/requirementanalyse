@@ -192,6 +192,20 @@ class Project
     /* ========== UITZOEKEN ========== */
     /* =============================== */
 
+    public function showAllRequirementsOfCategoryWithPriority(Category $category, $priority)
+    {
+        
+        for ($i=0; $i < count($this->requirements); $i++) { 
+            if ($this->requirements[$i]->getCategory() == $category->getId() && $this->requirements[$i]->getPriority() == $priority->getId()) {
+                echo "<div class=\"";
+                echo preg_replace('/\s+/', '', strtolower($priority->getName()));
+                echo "\">";
+                echo $this->requirements[$i]->getName();
+                echo "</div>";
+            }
+        }
+    }
+
     public function getRequirementByCategory($array, $category)
     {
         for ($i = 0; $i < count($array); $i++) {
