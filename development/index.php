@@ -21,13 +21,22 @@ include ("navigation.php");
     <section>
         <div class="requirements">
 
-            <?php if ($view == "furps") { 
+            <?php 
+            if ($view == "furps") { 
                 include ('./template/furps.template.php');
-            } ?>
-
-            <?php if ($view == "moscow") { 
+            } 
+            
+            if ($view == "moscow") { 
                 include ('./template/moscow.template.php');
-            } ?>
+            } 
+
+            if ($view == "newreq") { 
+                include ('./template/newrequirement.template.php');
+            } 
+            
+            
+            
+            ?>
 
         </div>
     </section>
