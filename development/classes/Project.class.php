@@ -16,15 +16,10 @@ class Project
         $this->database = $db;
 
         $this->selectName();
-
-        $priorityArray = $this->selectArrayOfPriorities();
-        $this->convertArrayToPriorities($priorityArray);
-
-        $categoryArray = $this->selectArrayOfCategories();
-        $this->convertArrayToCategories($categoryArray);
+        $this->selectArrayOfPriorities();
+        $this->selectArrayOfCategories();
+        $this->selectArrayOfRequirements();
         
-        $requirementArray = $this->selectArrayOfRequirements();
-        $this->convertArrayToRequirementObjects($requirementArray);
     }
 
     
@@ -38,7 +33,12 @@ class Project
     private function selectName()
     {
         $query = "SELECT `project_name` FROM projecten WHERE `project_id` = ?";
-        $this->setName($this->database->select($query, [$this->id])[0]["project_name"]);
+        $result = $this->database->select($query, [$this->id])[0]["project_name"];
+        if(!$result){
+            echo "Geen project gevonden met dit ID";
+            return;
+        }
+        $this->setName($result);
     }
 
 
@@ -47,21 +47,8 @@ class Project
     private function selectArrayOfRequirements()
     {
         $query = "SELECT * FROM requirements WHERE `project_id` = ? ORDER BY `requirement_id` ASC, `date_deadline` DESC, `priority_id` ASC, `category_id` ASC";
-        return $this->database->select($query, [$this->id]);
+        $this->convertArrayToRequirementObjects($this->database->select($query, [$this->id]));
     }
-
-
-    // // Haal een array met de categorieen die bij dit project horen op uit de database
-    // // TODO: Controleren of er rijen zijn die aan de query voldoen
-    // // TODO: Categories moeten een eigen klasse krijgen zodat er ook nummers enzo van gebruikt kunnen worden
-    // private function selectCategories()
-    // {
-    //     $query = "SELECT * FROM requirement_categories WHERE `project_id` = ? ORDER BY `category_id` ASC";
-    //     $result = $this->database->select($query, [$this->id]);
-    //     for ($i=0; $i < count($result); $i++) { 
-    //         $this->categories[] = $result[$i]["category_name"];
-    //     }
-    // }
 
 
     // Haal een array met de prioriteiten die bij dit project horen op uit de database
@@ -69,7 +56,7 @@ class Project
     private function selectArrayOfPriorities()
     {
         $query = "SELECT * FROM `requirement_priorities` WHERE `project_id` = ? ORDER BY `priority_id` ASC";
-        return $this->database->select($query, [$this->id]);
+        $this->convertArrayToPriorities($this->database->select($query, [$this->id]));
     }
 
 
@@ -78,7 +65,16 @@ class Project
     private function selectArrayOfCategories()
     {
         $query = "SELECT * FROM `requirement_categories` WHERE `project_id` = ? ORDER BY `category_id` ASC";
-        return $this->database->select($query, [$this->id]);
+        $this->convertArrayToCategories($this->database->select($query, [$this->id]));
+    }
+
+    // Een test methode om te kijken of ik er meteen een object van kan maken
+    private function selectArrayOfCategories2()
+    {
+        $query = "SELECT * FROM `requirement_categories` WHERE `project_id` = ? ORDER BY `category_id` ASC";
+        echo "<pre>";
+        var_dump($this->database->selectObject($query, [$this->id]));
+        echo "</pre>";
     }
 
     

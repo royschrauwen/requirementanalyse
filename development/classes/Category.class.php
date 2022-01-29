@@ -6,7 +6,7 @@ class Category
     private string $id;
     private string $name;
 
-    public function __construct(int $id,  string $name)
+    public function __construct(string $id,  string $name)
     {
         $this->id = $id;
         $this->setName($name);

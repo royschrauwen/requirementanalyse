@@ -67,5 +67,29 @@ class Database
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function selectObject($query, $arguments = null)
+    {
+        $statement = $this->connect()->prepare($query);
+
+        if (!$statement->execute($arguments)) {
+            $statement = null;
+            return "Error: Probleem met statement!";
+            exit();
+        }
+
+        if ($statement->rowCount() == 0) {
+                
+            $statement = null;
+            return "Error: er zijn 0 rijen!";
+            exit();
+        }
+    
+        //return $statement->fetchObject('\Softalist\Category',["id","name"]);
+        return $statement->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, '\Softalist\Category', ['id', 'name']);
+        //return $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+
+    }
+
     
 }
