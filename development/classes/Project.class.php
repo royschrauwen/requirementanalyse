@@ -120,13 +120,16 @@ class Project
                 $this, 
                 $array[$i]["requirement_name"],
                 $array[$i]["priority_id"],
-                $array[$i]["category_id"]
+                $array[$i]["category_id"],
+                $array[$i]["status_id"]
             );
+
             if ($array[$i]["user_id_task"]) {
                 $requirement->setUserTaskId($array[$i]["user_id_task"]);
             } else {
                 $requirement->setUserTaskId(0);
             }
+
             $this->setRequirement($requirement);
         }
     }
@@ -286,7 +289,7 @@ class Project
         }
             echo $moscowTypeName;
 
-            if (rand(0, 4) >= 4) {
+            if ($requirement->getStatus() == 5) {
                 echo " completed";
             }
 
@@ -295,7 +298,8 @@ class Project
 
             //echo "<b>" . ucfirst(substr($moscowTypeName, 0, 1)) . "." . sprintf("%02d", $i+1) . "</b> ";
 
-            echo "<input type=checkbox> ";
+            //echo "<input type=checkbox> ";
+
             echo "<div class=\"card-info\">";
             echo "<span>" . $requirement->getName() . "</span>";
             echo "<span class=\"card-deadline\">" .

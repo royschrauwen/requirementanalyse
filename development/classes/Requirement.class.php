@@ -11,6 +11,7 @@ class Requirement
     private Project $project;
     private $tasks = [];
     private int $user_task_id;
+    private int $status;
 
 
  
@@ -36,13 +37,24 @@ class Requirement
         $this->user_task_id = $userId;
     }
 
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-    public function __construct(Project $project, string $name, string $priority, string $category)
+    public function setStatus(int $newStatus)
+    {
+        $this->status = $newStatus;
+    }
+
+
+    public function __construct(Project $project, string $name, string $priority, string $category, int $status = 0)
     {
         $this->setName($name);
         $this->priority = $priority;
         $this->category = $category;
         $this->project = $project;
+        $this->setStatus($status);
         //$project->setRequirement($this);
     }
 
