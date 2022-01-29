@@ -21,6 +21,11 @@ class Priority
     /* ========== STANDAARD GETTER/SETTER METHODES ========== */
     /* ====================================================== */
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getName()
     {
         return $this->name;
