@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +10,17 @@
     
 <link rel="stylesheet" href="./css/style.css">
 <header>
-<img src="./images/softalist_temp_logo.png" height=20px alt="Logo">
-<h1><?= $project->getName(); ?></h1>
+<img src="./images/softalist_temp_logo.png" height=35px alt="Logo">
+<div class="">
+    <center>
+    <h1><?= $project->getName(); ?></h1>
+    <?= $project->countRequirements(); ?> Requirements
+    </center>
+</div>
 
-<?= $project->countRequirements(); ?> Requirements
+<div class="">
+    <a href="">Logout</a>
+</div>
+
 </header>
 <main>
