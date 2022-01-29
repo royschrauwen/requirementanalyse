@@ -27,7 +27,7 @@
     }
 
     main {
-        background-color: goldenrod;
+        background-color: #DBE4F3;
         display: flex;
         flex-direction: row;
         width: 100%;
@@ -35,21 +35,32 @@
         align-items: flex-start;
         margin: 0;
         padding: 0;
+        
     }
 
     nav {
-        background-color: royalblue;
+        background-color: whitesmoke;
+        padding: 0.2rem;
         position: -webkit-sticky;
         position: sticky;
         top: 90;
         height: 100%;
+        border-radius: 0.5rem;
+        border-top-right-radius: 0rem;
     }
 
     nav li {
         padding: 1rem;
         margin: 0.5rem;
         border-radius: 0.2rem;
-        background-color: sandybrown;
+        background-color: #3E4685;
+        color: white;
+        text-decoration: none;
+    }
+
+    nav li a {
+        color: white;
+        text-decoration: none;
     }
 
 
@@ -60,7 +71,7 @@
     }
 
     section {
-        background-color: purple;
+        background-color: #DBE4F3;
         flex-grow: 2;
     }
 
@@ -89,7 +100,7 @@
     }
 
     .moscow-main {
-        background-color: violet;
+        background-color: #F2F8FD;
         padding: 0.4rem;
         margin: 0.1rem 0.1rem;
         border-radius: 0.3rem;

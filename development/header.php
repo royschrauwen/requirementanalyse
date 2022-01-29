@@ -14,8 +14,9 @@
     
 <link rel="stylesheet" href="./css/style.css">
 <header>
+<img src="./images/softalist_temp_logo.png" height=20px alt="Logo">
 <h1><?= $project->getName(); ?></h1>
 
-<h2><?= $project->countRequirements(); ?> Requirements</h2>
+<?= $project->countRequirements(); ?> Requirements
 </header>
 <main>
