@@ -10,6 +10,7 @@ class Requirement
     private string $datetime_deadline = "25/01/2022 - 18:00";
     private Project $project;
     private $tasks = [];
+    private int $user_task_id;
 
 
  
@@ -22,6 +23,17 @@ class Requirement
     public function getTasks()
     {
         return $this->tasks;
+    }
+
+
+    public function getUserTaskId()
+    {
+        return $this->user_task_id;
+    }
+
+    public function setUserTaskId(int $userId)
+    {
+        $this->user_task_id = $userId;
     }
 
 

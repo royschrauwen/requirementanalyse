@@ -122,6 +122,11 @@ class Project
                 $array[$i]["priority_id"],
                 $array[$i]["category_id"]
             );
+            if ($array[$i]["user_id_task"]) {
+                $requirement->setUserTaskId($array[$i]["user_id_task"]);
+            } else {
+                $requirement->setUserTaskId(0);
+            }
             $this->setRequirement($requirement);
         }
     }
@@ -254,22 +259,31 @@ class Project
     {
         $result = $this->getRequirementByPriority($this->requirements, $prio+1);
         for ($i = 0; $i < count($result); $i++) {
-            switch ($prio+1) {
-                case "1":
-                    $moscowTypeName = "musthave";
-                    break;
-                case "2":
-                    $moscowTypeName = "shouldhave";
-                    break;
-                case "3":
-                    $moscowTypeName = "couldhave";
-                    break;
-                case "4":
-                    $moscowTypeName = "wonthave";
-                    break;
-            }
+            $this->displayRequirementCard($result[$i]);
+        }
 
-            echo "<div class=\"";
+
+        
+
+    }
+
+    public function displayRequirementCard(Requirement $requirement)
+    {
+        echo "<div class=\"";
+        switch ($requirement->getPriority()) {
+            case "1":
+                $moscowTypeName = "musthave";
+                break;
+            case "2":
+                $moscowTypeName = "shouldhave";
+                break;
+            case "3":
+                $moscowTypeName = "couldhave";
+                break;
+            case "4":
+                $moscowTypeName = "wonthave";
+                break;
+        }
             echo $moscowTypeName;
 
             if (rand(0, 4) >= 4) {
@@ -281,24 +295,17 @@ class Project
 
             //echo "<b>" . ucfirst(substr($moscowTypeName, 0, 1)) . "." . sprintf("%02d", $i+1) . "</b> ";
 
-            //echo "<input type=checkbox> ";
+            echo "<input type=checkbox> ";
             echo "<div class=\"card-info\">";
-            echo "<span>" . $result[$i]->getName() . "</span>";
+            echo "<span>" . $requirement->getName() . "</span>";
             echo "<span class=\"card-deadline\">" .
-                $result[$i]->getDateTimeDeadline() .
+                $requirement->getDateTimeDeadline() .
                 "</span>";
             echo "</div>";
-            echo "<img class=\"card-image\" src=";
-            if (rand(0, 4) == 1) {
-                $urlImage = "./images/profielfoto/royschrauwen.jpg";
-            } else {
-                $urlImage = "./images/profielfoto/generic.jpg";
-            }
-            echo $urlImage;
-            echo " width=80 height=80>";
+            echo "<img class=\"card-image\" src=./images/profielfoto/";
+            echo $requirement->getUserTaskId();
+            echo ".jpg width=80 height=80>";
             echo "</div>";
-            
-        }
     }
 
     public function showAllRequirementsOfCategory(Category $category)
