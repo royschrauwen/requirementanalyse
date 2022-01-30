@@ -1,7 +1,7 @@
 <div class="moscow-main">
 <div class="form-container">
     <h2>New Requirement</h2>
-<p><strong style="color: red;">Geen input in database want diabled voor testing.</strong></p>
+<!-- <p><strong style="color: red;">Geen input in database want diabled voor testing.</strong></p> -->
 
 <style>
     .moscow-main {
@@ -110,6 +110,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //pvd($query);
     pvd($arguments);
 
-    //$project->getDatabase()->insert($query, $arguments);
+    $project->getDatabase()->insert($query, $arguments);
 }   
 ?>
