@@ -46,7 +46,7 @@ class Project
     // TODO: Controleren of er rijen zijn die aan de query voldoen
     private function selectArrayOfRequirements()
     {
-        $query = "SELECT * FROM requirements WHERE `project_id` = ? ORDER BY `requirement_id` ASC, `date_deadline` DESC, `priority_id` ASC, `category_id` ASC";
+        $query = "SELECT * FROM requirements WHERE `project_id` = ? ORDER BY `status_id` ASC, `date_deadline` DESC, `priority_id` ASC, `category_id` ASC, `requirement_id` ASC";
         $this->convertArrayToRequirementObjects($this->database->select($query, [$this->id]));
     }
 
