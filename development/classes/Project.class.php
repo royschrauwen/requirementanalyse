@@ -130,6 +130,8 @@ class Project
                 $requirement->setUserTaskId(0);
             }
 
+            $requirement->setId($array[$i]["requirement_id"]);
+
             $this->setRequirement($requirement);
         }
     }
@@ -189,7 +191,11 @@ class Project
 
             //echo "<b>" . ucfirst(substr($moscowTypeName, 0, 1)) . "." . sprintf("%02d", $i+1) . "</b> ";
 
-            //echo "<input type=checkbox> ";
+            echo "<input name=\"requirement_checkbox\" type=checkbox ";
+            if ($requirement->getStatus() == 5) {
+                echo " checked";
+            }
+            echo " id=\"check_" . $requirement->getId() . "_" . $requirement->getStatus() . "\"> ";
 
             echo "<div class=\"card-info\">";
             echo "<span>" . $requirement->getName() . "</span>";

@@ -47,6 +47,29 @@ class Database
 
     }
 
+    public function update($query, $arguments)
+    {
+        $mydb = $this->connect();
+        $statement = $mydb->prepare($query);
+ 
+        if (!$statement->execute($arguments)) {
+            $statement = null;
+            return "Error: Probleem met statement!";
+            exit();
+        }
+        
+        if ($statement->rowCount() == 0) {
+            
+            $statement = null;
+            return "Error: er zijn 0 rijen gewijzigd!";
+            exit();
+        }
+
+        $statement = null;
+        return true;
+
+    }
+
     public function select($query, $arguments = null)
     {
         $statement = $this->connect()->prepare($query);

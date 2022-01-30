@@ -4,6 +4,8 @@ namespace Softalist;
 
 class Requirement
 {
+    private $id;
+
     private string $name;
     private string $priority;
     private string $category;
@@ -15,6 +17,15 @@ class Requirement
 
 
  
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($newId)
+    {
+        $this->id = $newId;
+    }
 
     public function addTask(Task $newTask)
     {
