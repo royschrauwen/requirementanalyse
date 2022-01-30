@@ -142,10 +142,75 @@ class Project
         return count($this->requirements);
     }
 
+    // Functie om binnen FURPS ook MoSCoW te kunnen tonen
+    public function showAllRequirementsOfCategoryWithPriority(Category $category, $priority)
+    {
+        
+        for ($i=0; $i < count($this->requirements); $i++) { 
+            if ($this->requirements[$i]->getCategory() == $category->getId() && $this->requirements[$i]->getPriority() == $priority->getId()) {
+                $this->displayRequirementCard($this->requirements[$i]);
+            }
+        }
+    }
+
+    public function showAllRequirementsOfPriority($prio)
+    {
+        $result = $this->getRequirementByPriority($this->requirements, $prio+1);
+        for ($i = 0; $i < count($result); $i++) {
+            $this->displayRequirementCard($result[$i]);
+        }
+    }
+
+    public function displayRequirementCard(Requirement $requirement)
+    {
+        echo "<div class=\"";
+        switch ($requirement->getPriority()) {
+            case "1":
+                $moscowTypeName = "musthave";
+                break;
+            case "2":
+                $moscowTypeName = "shouldhave";
+                break;
+            case "3":
+                $moscowTypeName = "couldhave";
+                break;
+            case "4":
+                $moscowTypeName = "wonthave";
+                break;
+        }
+            echo $moscowTypeName;
+
+            if ($requirement->getStatus() == 5) {
+                echo " completed";
+            }
+
+            echo " \" draggable=true";
+            echo ">";
+
+            //echo "<b>" . ucfirst(substr($moscowTypeName, 0, 1)) . "." . sprintf("%02d", $i+1) . "</b> ";
+
+            //echo "<input type=checkbox> ";
+
+            echo "<div class=\"card-info\">";
+            echo "<span>" . $requirement->getName() . "</span>";
+            echo "<span class=\"card-deadline\">" .
+                $requirement->getDateTimeDeadline() .
+                "</span>";
+            echo "</div>";
+            echo "<img class=\"card-image\" src=./images/profielfoto/";
+            echo $requirement->getUserTaskId();
+            echo ".jpg width=80 height=80>";
+            echo "</div>";
+    }
 
     /* ====================================================== */
     /* ========== STANDAARD GETTER/SETTER METHODES ========== */
     /* ====================================================== */
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getName()
     {
@@ -194,44 +259,31 @@ class Project
         return $this->requirements;
     }
 
+    public function getDatabase()
+    {
+        return $this->database;
+    }
+
 
 
     /* =============================== */
     /* ========== UITZOEKEN ========== */
     /* =============================== */
 
-    public function showAllRequirementsOfCategoryWithPriority(Category $category, $priority)
-    {
-        
-        for ($i=0; $i < count($this->requirements); $i++) { 
-            if ($this->requirements[$i]->getCategory() == $category->getId() && $this->requirements[$i]->getPriority() == $priority->getId()) {
-                
-                $this->displayRequirementCard($this->requirements[$i]);
-                
-                // echo "<div class=\"";
-                // echo preg_replace('/\s+/', '', strtolower($priority->getName()));
-                // echo "\">";
-                // echo $this->requirements[$i]->getName();
-                // echo "</div>";
 
 
-
-            }
-        }
-    }
-
-    public function getRequirementByCategory($array, $category)
-    {
-        for ($i = 0; $i < count($array); $i++) {
-            if ($array[$i]->getCategory() == $category) {
-                $result[] = $array[$i];
-            }
-        }
-        if (!isset($result)) {
-            return false;
-        }
-        return $result;
-    }
+    // public function getRequirementByCategory($array, $category)
+    // {
+    //     for ($i = 0; $i < count($array); $i++) {
+    //         if ($array[$i]->getCategory() == $category) {
+    //             $result[] = $array[$i];
+    //         }
+    //     }
+    //     if (!isset($result)) {
+    //         return false;
+    //     }
+    //     return $result;
+    // }
 
     public function getRequirementByPriority($array, $prio)
     {
@@ -246,95 +298,48 @@ class Project
         return $result;
     }
 
-    public function getRequirementByCategoryAndPriority($category, $prio)
-    {
-        $result1 = $this->getRequirementByCategory(
-            $this->getRequirements(),
-            $category
-        );
-        $result2 = $this->getRequirementByPriority($result1, $prio);
-        return $result2;
-    }
+    // public function getRequirementByCategoryAndPriority($category, $prio)
+    // {
+    //     $result1 = $this->getRequirementByCategory(
+    //         $this->getRequirements(),
+    //         $category
+    //     );
+    //     $result2 = $this->getRequirementByPriority($result1, $prio);
+    //     return $result2;
+    // }
 
 
-    public function showAllRequirementsOrdered($arrayOfCategories)
-    {
-        for ($i = 0; $i < count($arrayOfCategories); $i++) {
-            $this->showAllRequirementsOfCategory($arrayOfCategories[$i]);
-        }
-    }
-
-    public function showAllRequirementsOfPriority($prio)
-    {
-        $result = $this->getRequirementByPriority($this->requirements, $prio+1);
-        for ($i = 0; $i < count($result); $i++) {
-            $this->displayRequirementCard($result[$i]);
-        }
+    // public function showAllRequirementsOrdered($arrayOfCategories)
+    // {
+    //     for ($i = 0; $i < count($arrayOfCategories); $i++) {
+    //         $this->showAllRequirementsOfCategory($arrayOfCategories[$i]);
+    //     }
+    // }
 
 
-        
 
-    }
+    
 
-    public function displayRequirementCard(Requirement $requirement)
-    {
-        echo "<div class=\"";
-        switch ($requirement->getPriority()) {
-            case "1":
-                $moscowTypeName = "musthave";
-                break;
-            case "2":
-                $moscowTypeName = "shouldhave";
-                break;
-            case "3":
-                $moscowTypeName = "couldhave";
-                break;
-            case "4":
-                $moscowTypeName = "wonthave";
-                break;
-        }
-            echo $moscowTypeName;
+    // public function showAllRequirementsOfCategory(Category $category)
+    // {
+    //     echo "<div class=furps>";
 
-            if ($requirement->getStatus() == 5) {
-                echo " completed";
-            }
-
-            echo " \" draggable=true";
-            echo ">";
-
-            //echo "<b>" . ucfirst(substr($moscowTypeName, 0, 1)) . "." . sprintf("%02d", $i+1) . "</b> ";
-
-            //echo "<input type=checkbox> ";
-
-            echo "<div class=\"card-info\">";
-            echo "<span>" . $requirement->getName() . "</span>";
-            echo "<span class=\"card-deadline\">" .
-                $requirement->getDateTimeDeadline() .
-                "</span>";
-            echo "</div>";
-            echo "<img class=\"card-image\" src=./images/profielfoto/";
-            echo $requirement->getUserTaskId();
-            echo ".jpg width=80 height=80>";
-            echo "</div>";
-    }
-
-    public function showAllRequirementsOfCategory(Category $category)
-    {
-        echo "<div class=furps>";
-
-        for ($i = 0; $i < count($this->priorities); $i++) { 
-            echo "<h4>" . $this->priorities[$i]->getName() . "</h4>";
-            echo "<div>";
+    //     for ($i = 0; $i < count($this->priorities); $i++) { 
+    //         echo "<h4>" . $this->priorities[$i]->getName() . "</h4>";
+    //         echo "<div>";
             
-            echo "Haal alle requirements op van category <strong>"
-            . $category->getName()
-            . "</strong> met priority <strong>" 
-            . $this->priorities[$i]->getName() 
-            . "</strong><br><br>";
+    //         echo "Haal alle requirements op van category <strong>"
+    //         . $category->getName()
+    //         . "</strong> met priority <strong>" 
+    //         . $this->priorities[$i]->getName() 
+    //         . "</strong><br><br>";
 
-            echo "</div>";
-        }
+    //         echo "</div>";
+    //     }
 
-        echo "</div>";
-    }
+    //     echo "</div>";
+    // }
+
+
+
 }
