@@ -27,6 +27,20 @@ input[type=checkbox]:hover {
     color: green;
 }
 
+button {
+    text-align: center;
+    padding: 0.2rem;
+    height: fit-content;
+    width: fit-content;
+    cursor: copy;
+    background: none;
+    border: none;
+}
+
+button:hover{
+    border: 1px green solid;
+}
+
     </style>
 
     <section>

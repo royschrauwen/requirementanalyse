@@ -11,8 +11,6 @@ $requirementId = isset($_GET['rid']) ?  (int)$_GET['rid'] : 127;
 $userId = isset($_GET['uid']) ?  (int)$_GET['uid'] : 3;
 $returnView = isset($_GET['return']) ?  $_GET['return'] : "furps";
 
-
-
 $database = new Database();
 
 $query = "UPDATE requirements SET user_id_task = ? WHERE requirement_id = ?";

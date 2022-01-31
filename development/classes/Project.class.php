@@ -203,10 +203,14 @@ class Project
                 $requirement->getDateTimeDeadline() .
                 "</span>";
             echo "</div>";
+            // echo "<img class=\"card-image\" src=./images/profielfoto/";
+            // echo $requirement->getUserTaskId();
+            // echo ".jpg width=80 height=80>";
+            echo "<button name=\"assignToMe\" id=\"" . $requirement->getId() . "_" . $_SESSION["userid"] . "\">";
             echo "<img class=\"card-image\" src=./images/profielfoto/";
             echo $requirement->getUserTaskId();
             echo ".jpg width=80 height=80>";
-            echo "<button name=\"assignToMe\" id=\"" . $requirement->getId() . "_" . $_SESSION["userid"] . "\">+</button>";
+            echo "</button>";
             echo "</div>";
     }
 
