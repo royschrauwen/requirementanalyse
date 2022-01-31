@@ -17,3 +17,20 @@ function changeStatus(item)
     // localhost/requirementanalyse/development/changestatus.php?id=21&status=5&return=moscow
     window.location.replace('changestatus.php?id=' + itemId + '&status=' + itemNewStatus);
 }
+
+
+document.getElementsByName('assignToMe').forEach(item => {
+    item.addEventListener('click', event => {
+        assignToMe(item.id);
+    })
+})
+
+function assignToMe(item)
+{
+    itemData = item.split("_");
+    itemId = itemData[0];
+    userId = itemData[1];
+    $url = 'update.php?type=assign&rid=' + itemId + '&uid=' + userId;
+    console.log($url);
+    window.location.replace($url);
+}

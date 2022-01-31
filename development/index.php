@@ -17,7 +17,7 @@ include ("header.php");
 include ("navigation.php"); 
 
 ?>
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
 input[type=checkbox] {
     margin-right: 0.5rem;
@@ -26,6 +26,7 @@ input[type=checkbox] {
 input[type=checkbox]:hover {
     color: green;
 }
+
     </style>
 
     <section>
@@ -48,6 +49,9 @@ $view = isset($_GET['view']) ? $_GET['view'] : "moscow";
                 include ('./template/newrequirement.template.php');
             } 
             
+            if ($view == "mytasks") { 
+                include ('./template/mytasks.template.php');
+            }
             
             
             ?>
