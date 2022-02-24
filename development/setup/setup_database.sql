@@ -1,10 +1,10 @@
 -- ==================== TABELLEN VERWIJDEREN OM DE TESTS UIT TE KUNNEN VOEREN ====================
-DROP TABLE softalist_test.requirements;
-DROP TABLE softalist_test.requirement_priorities;
-DROP TABLE softalist_test.requirement_categories;
-DROP TABLE softalist_test.requirement_status;
-DROP TABLE softalist_test.projecten;
-DROP TABLE softalist_test.users;
+DROP TABLE IF EXISTS softalist_test.requirements;
+DROP TABLE IF EXISTS softalist_test.requirement_priorities;
+DROP TABLE IF EXISTS softalist_test.requirement_categories;
+DROP TABLE IF EXISTS softalist_test.requirement_status;
+DROP TABLE IF EXISTS softalist_test.projecten;
+DROP TABLE IF EXISTS softalist_test.users;
 
 -- ==================== TABELLEN AANMAKEN ====================
 
